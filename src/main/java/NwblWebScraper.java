@@ -2,7 +2,7 @@ import scraper.WebScraper;
 import scraper.gerrit.OnosGerritScraper;
 
 /**
- *  Network BL web scraper application
+ * Network BL web scraper application
  */
 class NwblWebScraper {
 

@@ -12,7 +12,6 @@ public class OnosGerritScraper implements WebScraper {
     @Override
     public void scrape() {
         GerritScraper scraper = new QueryPage(URL, searchTerm);
-        scraper.loadPage();
         scraper.scrape();
     }
 
