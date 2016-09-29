@@ -36,6 +36,7 @@ class QueryPage extends GerritScraper {
 
     private final String baseUrl;
     private final String searchTerm;
+    private boolean hasNextPage = false;
     private String nextPageUrl;
 
     QueryPage(String baseUrl, String searchTerm) {
@@ -50,14 +51,14 @@ class QueryPage extends GerritScraper {
 
     public void scrape() {
         do {
-            if (nextPageUrl != null) {
+            if (hasNextPage) {
                 this.url = nextPageUrl;
-                nextPageUrl = null;
+                hasNextPage = false;
             }
             loadPage();
             scrapeChangeTable();
             scrapePrevNextLinks();
-        } while (nextPageUrl != null);
+        } while (hasNextPage);
     }
 
     private void scrapeChangeTable() {
@@ -111,6 +112,8 @@ class QueryPage extends GerritScraper {
             log.info("No next link present in page");
             return;
         }
+
+        hasNextPage = true;
         String nextLink = anchor.getHrefAttribute();
         log.info("Next link is {}", nextLink);
         nextPageUrl = baseUrl + '/' + nextLink;
@@ -151,7 +154,7 @@ class QueryPage extends GerritScraper {
 
     private void storeSize(HtmlTableCell cell) {
         String size = cell.getAttribute("title");
-        log.debug("Size is '{}'", size);
+        log.info("Size is '{}'", size);
     }
 
     private void storeCodeReviewScore(HtmlTableCell cell) {

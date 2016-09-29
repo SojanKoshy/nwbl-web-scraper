@@ -26,6 +26,12 @@ class GerritScraper {
         this.url = url;
     }
 
+    public void scrape() {
+        loadPage();
+        log.info("Page as xml\n{}", page.asXml());
+        log.info("Page as text\n{}", page.asText());
+    }
+
     void loadPage() {
         try {
             log.info("Loading page {}", url);
@@ -68,10 +74,5 @@ class GerritScraper {
             log.info("Page loading status is '{}'", loadingStatus);
         }
         return loadingStatus.equalsIgnoreCase(PAGE_LOADING_TEXT);
-    }
-
-    public void scrape() {
-        log.info("Page as xml\n{}", page.asXml());
-        log.info("Page as text\n{}", page.asText());
     }
 }
