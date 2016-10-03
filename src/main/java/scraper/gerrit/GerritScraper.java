@@ -17,8 +17,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 class GerritScraper {
     private static final String PAGE_LOADING_XPATH = "/html/body/span";
     private static final String PAGE_LOADING_TEXT = "Working ...";
-    private final WebClient webClient = new WebClient(BrowserVersion.CHROME);
     final Logger log = getLogger(getClass());
+    private final WebClient webClient = new WebClient(BrowserVersion.CHROME);
     String url;
     HtmlPage page;
 

@@ -89,13 +89,16 @@ class ChangePage extends GerritScraper {
 
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(patchSets);
+        if(matcher.find()) {
+            Integer currentPatch = Integer.valueOf(matcher.group(0));
 
-        Integer currentPatch = Integer.valueOf(matcher.group(0));
-
-        if (currentPatch != 1) {
-            Integer nextPatch = currentPatch - 1;
-            hasNextPage = true;
-            nextPageUrl = baseUrl + CHANGE_PAGE_PATH + branchId + '/' + nextPatch.toString();
+            if (currentPatch != 1) {
+                Integer nextPatch = currentPatch - 1;
+                hasNextPage = true;
+                nextPageUrl = baseUrl + CHANGE_PAGE_PATH + branchId + '/' + nextPatch.toString();
+            }
+        } else {
+            log.error("Unable to parse the next patch number from '{}'", patchSets);
         }
     }
 
